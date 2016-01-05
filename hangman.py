@@ -9,10 +9,19 @@ def terminalGameSuite():
         print("\n")
     print("Welcome to the Terminal Game Suite!\n")
     print("Which game would you like to play? Please type the number corresponding to the name.\n")
-    print("Options:\n    1) Hangman")
-    input_game = raw_input()
-    if input_game == "1" or input_game == "one":
-        hangman()
+    print("Options:\n    1) Hangman\n")
+    print("   2) Guess the number\n")
+    satisfiedInput = False
+    while not satisfiedInput:
+        input_game = raw_input()
+        if input_game == "1" or input_game == "one":
+            satisfiedInput = True
+            hangman()
+        elif input_game == "2" or input_game == "two":
+            satisfiedInput = True
+            guess_the_number()
+        else:
+            print("Please type in a valid number")
 
 def addspace():
     print("\n\n\n")
@@ -255,3 +264,62 @@ def hangman():
         for _ in range(100):
             print("\n")
         terminalGameSuite()
+
+
+
+def guess_the_number():
+    print("\n\n\nHow many guesses do you want?")
+    inputIsNum = False
+    while not inputIsNum:
+        num_guesses = raw_input()
+        if type(num_guesses) == int:
+            inputIsNum = True
+        else:
+            print("Please input a valid number")
+            print(type(num_guesses))
+    print("\n\n\nUp to what number would you like the range?")
+    inputIsFine = False
+    while not inputIsFine:
+        upperBound = raw_input()
+        if type(upperBound) is int:
+            inputIsFine = True
+        else:
+            print("Please input a valid number")
+    print("\n\n\nI'm thinking of a number between 1 and " + str(upperBound))
+    playerIsLosing = True
+    actualValue = random.randint(1,upperBound)
+    numErrors = 0
+    while playerIsLosing:
+        if numErrors == num_guesses:
+            print("You're out of guesses! The correct number was " + str(actualValue))
+            break
+        input_value = raw_input()
+        if type(input_value) != int:
+            print("Please input a valid integer")
+            continue
+        elif input_value == actualValue:
+            print("You got it! The number was " + str(actualValue))
+            break
+        elif input_value < actualValue:
+            print("Your number is too low.")
+            numErrors += 1
+        elif input_value > actualValue and input_value <= upperBound:
+            print("Your number is too high.")
+            numErrors += 1
+        elif input_value > actualValue:
+            print("Your number is above the upper bound. No penalty is given.")
+
+    print("Would you like to play again? yes/no")
+    inputAnswer = False
+    while not inputAnswer:
+        answer = raw_input()
+        if answer=="yes" or answer=="y" or answer=="Yes" or answer=="Y":
+            guess_the_number()
+            inputAnswer = True
+        elif answer=="no" or answer=="n" or answer=="No" or answer=="n":
+            for _ in range(100):
+                print("\n")
+            terminalGameSuite()
+            inputAnswer = True
+        else:
+            print("Please answer with yes or no.")
