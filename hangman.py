@@ -119,7 +119,7 @@ def hangman():
     current_board = []
     contained_letters = []
     list_of_words = ["james franco", "john cena"]
-    star_wars_words = ["he is a political idealist", "ki adi mundi", "mygeeto", "kashyyyk", "han solo dies",
+    star_wars_words = ["he is a political idealist", "ki adi mundi", "mygeeto", "kashyyyk",
                         "aweeeeeeeeeeeba", "darth darth binks", "meesa going home", "dellow felegates",
                         "i slaughtered them like animals", "only a sith deals in absolutes", "killing younglings",
                         "i hate sand", "midichlorians", "i have the high ground", "so uncivilized",
@@ -269,23 +269,20 @@ def hangman():
 
 def guess_the_number():
     print("\n\n\nHow many guesses do you want?")
-    inputIsNum = False
-    while not inputIsNum:
-        num_guesses = raw_input()
-        if type(num_guesses) == int:
-            inputIsNum = True
-        else:
-            print("Please input a valid number")
-            print(type(num_guesses))
+    while True:
+        try:
+            num_guesses = int(raw_input())
+            break
+        except ValueError:
+            print("Please input a valid integer")
     print("\n\n\nUp to what number would you like the range?")
-    inputIsFine = False
-    while not inputIsFine:
-        upperBound = raw_input()
-        if type(upperBound) is int:
-            inputIsFine = True
-        else:
+    while True:
+        try:
+            upperBound = int(raw_input())
+            break
+        except ValueError:
             print("Please input a valid number")
-    print("\n\n\nI'm thinking of a number between 1 and " + str(upperBound))
+    print("\n\n\nI'm thinking of a number between 1 and " + str(upperBound)". What's your guess?")
     playerIsLosing = True
     actualValue = random.randint(1,upperBound)
     numErrors = 0
