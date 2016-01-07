@@ -268,43 +268,56 @@ def hangman():
 
 
 def guess_the_number():
-    print("\n\n\nHow many guesses do you want?")
-    while True:
-        try:
-            num_guesses = int(raw_input())
-            break
-        except ValueError:
-            print("Please input a valid integer")
-    print("\n\n\nUp to what number would you like the range?")
+    guessed_set = set()
+    for _ in range(100):
+        print("\n")
+
+    print("Up to what number would you like the range?")
     while True:
         try:
             upperBound = int(raw_input())
             break
         except ValueError:
             print("Please input a valid number")
-    print("\n\n\nI'm thinking of a number between 1 and " + str(upperBound)". What's your guess?")
+
+    print("\n\n\nHow many guesses would you like?")
+    while True:
+        try:
+            num_guesses = int(raw_input())
+            break
+        except ValueError:
+            print("Please input a valid integer")
+
+    print("\n\n\nI'm thinking of a number between 1 and " + str(upperBound) + ". What's your guess?\n")
     playerIsLosing = True
     actualValue = random.randint(1,upperBound)
     numErrors = 0
+
     while playerIsLosing:
         if numErrors == num_guesses:
             print("You're out of guesses! The correct number was " + str(actualValue))
             break
-        input_value = raw_input()
-        if type(input_value) != int:
-            print("Please input a valid integer")
+        while True:
+            try:
+                input_value = int(raw_input())
+                break
+            except ValueError:
+                print("Please input a valid integer")
+        if input_value in guessed_set:
+            print("You have already guessed " + str(input_value) + "! No penalty is given.\n")
             continue
-        elif input_value == actualValue:
-            print("You got it! The number was " + str(actualValue))
+        guessed_set.add(input_value)
+        if input_value == actualValue:
+            print("You got it! The number was " + str(actualValue) +".")
             break
         elif input_value < actualValue:
-            print("Your number is too low.")
+            print("Your number is too low. Guess again!")
             numErrors += 1
         elif input_value > actualValue and input_value <= upperBound:
-            print("Your number is too high.")
+            print("Your number is too high. Guess again!")
             numErrors += 1
         elif input_value > actualValue:
-            print("Your number is above the upper bound. No penalty is given.")
+            print("Your number is above the upper bound. No penalty is given. Guess again!")
 
     print("Would you like to play again? yes/no")
     inputAnswer = False
